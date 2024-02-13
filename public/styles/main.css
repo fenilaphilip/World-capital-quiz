@@ -1,0 +1,68 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: rgb(19, 11, 16);
+}
+
+.container {
+    margin: 15% auto;
+    padding: 20px;
+    padding-top: 10px;
+    background-color: rgba(80, 78, 136, 0.623);
+    border-radius: 10px;
+    box-shadow: 0 0 10 px rgba(0, 0, 0, 0.2);
+    max-width: 40%;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+}
+
+.score-reading{
+    display: flex;
+    justify-content: space-between;
+}
+h3 {
+    margin: 0;
+}
+
+.country-name {
+    text-align: center;
+}
+
+.answer-box {
+    width:100%;
+    text-align: center;
+
+}
+
+input {
+    text-align: center;
+    width: 30%;
+    margin: 10px auto;
+    padding: 10px;
+    border: 1px solid cadetblue;
+    border-radius: 5px;
+} 
+
+.submit-button{
+    text-align: center;
+
+}
+
+button{
+    font-weight:800;
+    letter-spacing: 2px;
+    font-size: large;
+    width : 80%;
+    padding:15px;
+    margin-top: 20px;
+    background-color: #76a1dd;
+    border: 1px solid rgb(0, 7, 7);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #ffd500;
+  }
