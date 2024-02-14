@@ -28,24 +28,43 @@ db.query("SELECT * FROM capitals", (err, res) => {
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-let totalCorrect = 0;
+let totalCorrect;
 let currentQuestion;
+let isAnswerCorrect;
 
 app.get("/", async (req, res) => {
+    totalCorrect = 0;
+    isAnswerCorrect = true;
     await nextQuestion();
     res.render("index.ejs", {
         totalScore: totalCorrect,
-        countryName: currentQuestion
+        countryName: currentQuestion,
+        rightAnswer: isAnswerCorrect
     });
-}); 
+});
 
 app.post("/submit", (req, res) => {
-    console.log("hello");
-    res.render("index.ejs");
-})
+    let answer = req.body.answer.trim();
+    if (currentQuestion.capital.toLowerCase() === answer.toLowerCase()) {
+        totalCorrect++;
+        nextQuestion();
+        console.log(`score: ${totalCorrect}`);
+        res.render("index.ejs", {
+            totalScore: totalCorrect,
+            countryName: currentQuestion,
+            rightAnswer: isAnswerCorrect
+        });
+    } else {
+        isAnswerCorrect = false;
+        res.render("index.ejs", {
+            totalScore: totalCorrect,
+            rightAnswer: isAnswerCorrect
+        });
+    }
+});
 
-async function nextQuestion(){
-    const randomCountry = quizBank[Math.floor(Math.random()*quizBank.length)].country;
+async function nextQuestion() {
+    const randomCountry = quizBank[Math.floor(Math.random() * quizBank.length)];
     currentQuestion = randomCountry;
     console.log(randomCountry);
 }
