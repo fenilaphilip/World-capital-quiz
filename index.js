@@ -15,12 +15,12 @@ const db = new pg.Client({
 
 db.connect();
 
-let quiz = []
+let quizBank = []
 db.query("SELECT * FROM capitals", (err, res) => {
     if (err) {
         console.error("Error executing query", err.stack0);
     } else {
-        quiz = res.rows;
+        quizBank = res.rows;
     }
     db.end();
 })
@@ -29,17 +29,26 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 let totalCorrect = 0;
+let currentQuestion;
 
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
+    await nextQuestion();
     res.render("index.ejs", {
-        totalScore: totalCorrect
+        totalScore: totalCorrect,
+        countryName: currentQuestion
     });
-});
+}); 
 
 app.post("/submit", (req, res) => {
     console.log("hello");
     res.render("index.ejs");
 })
+
+async function nextQuestion(){
+    const randomCountry = quizBank[Math.floor(Math.random()*quizBank.length)].country;
+    currentQuestion = randomCountry;
+    console.log(randomCountry);
+}
 
 app.listen(port, () => {
     console.log(`Server is sucessfully running on port ${port}. Go to https://localhost:${port}`)
