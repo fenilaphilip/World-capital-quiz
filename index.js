@@ -58,9 +58,14 @@ app.post("/submit", (req, res) => {
         isAnswerCorrect = false;
         res.render("index.ejs", {
             totalScore: totalCorrect,
-            rightAnswer: isAnswerCorrect
+            rightAnswer: isAnswerCorrect,
+            countryName: currentQuestion
         });
     }
+});
+
+app.post("/restart", (req, res) => {
+   res.redirect("/");
 });
 
 async function nextQuestion() {

@@ -10,8 +10,10 @@
 
 <body>
   <div class="container">
+
+    <% if (locals.rightAnswer === true) { %>
+
     <form action="/submit" method="post">
-      <% if (locals.rightAnswer === true) { %>
       <div class="score-reading">
         <h3>Total Score: <span> <%= totalScore %></span></h3>
       </div>
@@ -24,13 +26,23 @@
       <div class="submit-button">
         <button type="submit">SUBMIT</button>
       </div>
-      <% } else { %>
-      <div>
-        <h3>Game over!</h3>
+    </form>
+
+    <% } else { %>
+
+    <form action="/restart" method="post">
+      <h3>Game over!</h3>
+      <h3><%= countryName.capital %> is the capital of <%=countryName.country %>. </h3>
+      <div class="final-score">
         <h1>Your Score is <%= totalScore %></h1>
       </div>
-      <% } %>
+      <div class="restart-button">
+        <button type="submit">RESTART QUIZ</button>
+      </div>
     </form>
+
+    <% } %>
+
   </div>
 </body>
 
