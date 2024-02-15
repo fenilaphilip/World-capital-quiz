@@ -65,15 +65,18 @@ app.post("/submit", (req, res) => {
 });
 
 app.post("/restart", (req, res) => {
-   res.redirect("/");
+    res.redirect("/");
 });
 
 async function nextQuestion() {
     const randomCountry = quizBank[Math.floor(Math.random() * quizBank.length)];
+    if (randomCountry.capital === null) {
+        nextQuestion();
+    };
     currentQuestion = randomCountry;
-    console.log(randomCountry);
-}
+    console.log(currentQuestion);
+};
 
 app.listen(port, () => {
     console.log(`Server is sucessfully running on port ${port}. Go to https://localhost:${port}`)
-})
+});
