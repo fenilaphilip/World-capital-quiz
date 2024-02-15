@@ -41,6 +41,7 @@ app.use(express.static("public"));
 let totalCorrect;
 let currentQuestion;
 let isAnswerCorrect;
+let flag;
 
 app.get("/", async (req, res) => {
     totalCorrect = 0;
@@ -49,6 +50,7 @@ app.get("/", async (req, res) => {
     res.render("index.ejs", {
         totalScore: totalCorrect,
         countryName: currentQuestion,
+        flag:flag,
         rightAnswer: isAnswerCorrect
     });
 });
@@ -62,6 +64,7 @@ app.post("/submit", (req, res) => {
         res.render("index.ejs", {
             totalScore: totalCorrect,
             countryName: currentQuestion,
+            flag:flag,
             rightAnswer: isAnswerCorrect
         });
     } else {
@@ -84,7 +87,14 @@ async function nextQuestion() {
         nextQuestion();
     };
     currentQuestion = randomCountry;
+    for (let index = 0; index < countryFlags.length; index++) {
+       if(currentQuestion.country === countryFlags[index].name){
+         flag = countryFlags[index].flag;
+         console.log(countryFlags[index].name);
+       } ;  
+    };
     console.log(currentQuestion);
+    console.log(flag);
 };
 
 app.listen(port, () => {
