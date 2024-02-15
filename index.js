@@ -15,15 +15,25 @@ const db = new pg.Client({
 
 db.connect();
 
-let quizBank = []
+let quizBank = [];
+let countryFlags = [];
 db.query("SELECT * FROM capitals", (err, res) => {
     if (err) {
-        console.error("Error executing query", err.stack0);
+        console.error("Error executing query", err.stack);
     } else {
         quizBank = res.rows;
     }
-    db.end();
-})
+
+    db.query("SELECT * FROM flags", (err, res) => {
+        if (err) {
+            console.error("Error executing query", err.stack);
+        } else {
+            countryFlags = res.rows;
+        }
+        db.end();
+    });
+});
+
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
